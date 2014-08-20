@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Media Sync</title>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="jquery.nouislider.css" rel="stylesheet">
+    <link href="fontello.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div id="chat-field" class="input-group">
+        <input type="text" class="form-control" placeholder="Username">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Connect</button>
+        </span>
+    </div>
+    <div id="login-area">
+        <h1>Enter a username to join the room</h1>
+        <hr>
+        <div id="username-field" class="input-group input-group-lg">
+            <input type="text" class="form-control" placeholder="Username" data-toggle="popover" data-placement="bottom" data-trigger="manual" data-container="body" data-content="Username already taken!">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" disabled>Connect</button>
+            </span>
+        </div>
+    </div>
+    <div id="interaction-area">
+        <div id="header-area">
+            <h1>Chat room name</h1>
+        </div>
+        <div id="content-area">
+            <div id="content-selector">
+                <span id="volume-state-icon" class="glyphicon glyphicon-volume-up"></span>
+                <div id="volume-controls">
+                    <div id="volume-slider"></div>
+                </div>
+                <button type="button" id="queue-button" class="btn btn-lg btn-default pull-right"><span class="glyphicon glyphicon-list"></span></button>
+                <div class="btn-group btn-group-lg pull-right">
+                    <button type="button" id="previous-media-button" class="btn btn-default"><span class="glyphicon glyphicon-fast-backward"></span></button>
+                    <button type="button" id="next-media-button" class="btn btn-default"><span class="glyphicon glyphicon-fast-forward"></span></button>
+                </div>
+                <div id="queue-manager-container">
+                    <div id="queue-manager">
+                        <ul class="list-group">
+                            <li class="list-group-item active">
+                                <span class="icon-headphones"></span>
+                                <span class="media-name">[Dubstep] - Au5 - Follow You (feat. Danyka Nadeau) (VIP Mix) [Remix EP Released in Japan]</span>
+                                <button type="button" class="close pull-right delete-button"><span class="glyphicon glyphicon-remove"></span>
+                                </button><button type="button" class="close pull-right play-button"><span class="glyphicon glyphicon-play"></span></button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="input-group" id="queue-input">
+                      <input type="text" class="form-control" placeholder="Enter a URL..."  data-toggle="popover" data-placement="bottom" data-trigger="manual" data-container="body" data-content="Not valid media!">
+                      <div class="input-group-btn">
+                        <button id="queue-now-button" class="btn btn-default" type="button">Now</button>
+                        <button id="queue-next-button" class="btn btn-default" type="button">Next</button>
+                        <button id="queue-last-button" class="btn btn-default" type="button">Last</button>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div id="content-display-area">
+            
+            </div>
+            <div id="hidden-test-area"></div>
+        </div>
+        <div id="chat-area">
+            <div id="connected-list-area">
+                <button type="button" class="btn btn-default btn-lg">
+                    <span class="glyphicon glyphicon-user"></span>
+                    <span class="badge">1</span>
+                </button>
+                <div id="connected-list">
+                    <span class="list-heading">People Connected</span>
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+            <div id="message-area">
+            </div>
+            <div id="input-box">
+                <input type="text" class="form-control input-lg" placeholder="Send a message...">
+            </div>
+        </div>
+    </div>
+</div>
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="http://code.jquery.com/color/jquery.color-2.1.2.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="http://cdn.peerjs.com/0.3/peer.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/noUiSlider/6.2.0/jquery.nouislider.min.js"></script>
+<script src="https://w.soundcloud.com/player/api.js"></script>
+<script src="scripts/minified.js"></script>
+</body>
+</html>
