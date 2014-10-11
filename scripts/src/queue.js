@@ -1,3 +1,4 @@
+// jscs:disable
 // Add start playing at and delete objects from queue
 
 var youtubeMatcher = /www\.youtube\.com\/watch\?v=([^&]+)/
@@ -6,17 +7,17 @@ var hiddenDivID = "hidden-test-area";
 var Queue = function() {
     nextButton.attr("disabled", true);
     previousButton.attr("disabled", true);
-    
+
     this.queue = [];
     this.currentlyPlaying = 0;
-    
+
     onMessageType("queue-data", function(queue) {
         return function(from, data) {
             console.log("Update queue: ",data)
             queue.setSerializedQueue(data);
         }
     }(this));
-    
+
     onMessageType("request-queue-data", function(queue) {
         return function(from) {
             console.log("Received queue update request")
@@ -71,7 +72,7 @@ Queue.prototype.getSerializedQueue = function() {
     serializedQueue["playing"] = this.currentlyPlaying;
     return serializedQueue;
 }
-                                       
+
 Queue.prototype.getMetadata = function(type, code, callback) {
     if (type == "youtube") {
         var testPlayer = new YT.Player(hiddenDivID, {
@@ -81,9 +82,9 @@ Queue.prototype.getMetadata = function(type, code, callback) {
             events: {
                 "onReady": function(callback) {
                     return function(event) {
-                        var videoTitle = event.target.o.videoData.title;
+                        var videoTitle = event.target.A.videoData.title;
                         if (videoTitle.length > 0) {
-                            event.target.playVideo();  
+                            event.target.playVideo();
                         } else {
                             console.log("YouTube: Invalid video");
                             callback(false);
@@ -94,7 +95,7 @@ Queue.prototype.getMetadata = function(type, code, callback) {
                     return function(event) {
                         if (event.data == 1) {
                             event.target.setVolume(0);
-                            var videoTitle = event.target.o.videoData.title;
+                            var videoTitle = event.target.A.videoData.title;
                             var duration = event.target.getDuration();
                             testPlayer.destroy();
                             testPlayer = null;
@@ -115,7 +116,7 @@ Queue.prototype.getMetadata = function(type, code, callback) {
         var testElement = $('<iframe width="500px" height="500px" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url='+ code +'&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>');
         $("#"+hiddenDivID).append(testElement);
         var testPlayer = SC.Widget(testElement.get(0));
-        
+
         var testErrorTimeout = setTimeout(function(callback, testPlayer) {
             return function() {
                 console.log("Soundcloud: Could not find song!");
@@ -127,7 +128,7 @@ Queue.prototype.getMetadata = function(type, code, callback) {
                 callback(false);
             }
         }(callback, testPlayer), 5000);
-        
+
         testPlayer.bind(SC.Widget.Events.READY, function(callback, testPlayer) {
             return function (){
                 testPlayer.getCurrentSound(function(callback) {
@@ -142,7 +143,7 @@ Queue.prototype.getMetadata = function(type, code, callback) {
                     }
                 }(callback));
             }
-        }(callback, testPlayer));  
+        }(callback, testPlayer));
     } else if (type == "html5") {
         console.log("Waiting for HTML event...");
         var testAudio = $("<audio id='html5audio' src='" + code.replace(/&/g,"&amp;") + "'></audio>")
