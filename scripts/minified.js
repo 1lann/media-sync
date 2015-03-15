@@ -1372,7 +1372,7 @@ Queue.prototype.getMetadata = function(e, t, n) {
             events: {
                 onReady: function(e) {
                     return function(t) {
-                        var n = t.target.B.videoData.title;
+                        var n = t.target.getVideoData().title;
                         if (n.length > 0) {
                             t.target.playVideo()
                         } else {
@@ -1385,7 +1385,7 @@ Queue.prototype.getMetadata = function(e, t, n) {
                     return function(t) {
                         if (t.data == 1) {
                             t.target.setVolume(0);
-                            var n = t.target.B.videoData.title;
+                            var n = t.target.getVideoData().title;
                             var i = t.target.getDuration();
                             r.destroy();
                             r = null;
