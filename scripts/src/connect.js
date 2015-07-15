@@ -32,7 +32,7 @@ $("#username-field button").click(function(e) {
 });
 
 $("#username-field input").on("keyup", function(e) {
-    if ($(this).val().length > 4 && $(this).val().length < 21) {
+    if ($(this).val().trim().length > 1 && $(this).val().trim().length <= 30) {
         $("#username-field button").attr("disabled", false);
         if (e.which == 13) {
             $("#username-field button").click();
