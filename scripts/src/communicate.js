@@ -85,7 +85,7 @@ var getUsername = function(peerName) {
 
 // Override this
 var disconnectedFromNetwork = function(peer) {
-    
+
 }
 
 var reconnectedToNetwork = function() {
@@ -108,7 +108,7 @@ var peerError = function(peerName, error) {
         disconnectedFromNetwork();
         disconnectedInterval = setInterval(function() {
             if (peer.disconnected) {
-                peer.reconnect(); 
+                peer.reconnect();
             } else {
                 reconnectedToNetwork();
                 clearInterval(disconnectedInterval);
@@ -135,7 +135,7 @@ var fatalError = function(err) {
 var registerPeerConnection = function(conn, label) {
     console.log("Registered new peer: "+conn.peer);
     connectedPeers[conn.peer] = conn;
-    
+
     conn.on("data", function(data) {
         if (data["type"] && data["data"]) {
             if (functionsForTypes[data["type"]]) {
@@ -146,7 +146,7 @@ var registerPeerConnection = function(conn, label) {
             receivedData(this.peer, data["type"], data["data"]);
         }
     });
-    
+
     conn.on("close", function() {
         if (window.navigator.onLine) {
             var username = getUsername(this.peer);
@@ -161,7 +161,7 @@ var registerPeerConnection = function(conn, label) {
             }
             connectedToNetwork = false;
             disconnectedFromNetwork();
-            
+
             var connectionInterval = setInterval(function() {
                 if (window.navigator.onLine) {
                     clearInterval(connectionInterval);
@@ -179,15 +179,15 @@ var registerPeerConnection = function(conn, label) {
             }, 1000);
         }
     });
-    
+
     conn.on("error", function(err) {
         peerError(this.peer, err);
     });
-    
+
     if (label) {
         nicknames[conn.peer] = label;
     }
-    
+
     if (connectedToNetwork) {
         for (var key in initialPeerList) {
             if (initialPeerList[key] == conn.peer) {
@@ -211,7 +211,7 @@ var connectToAllPeers = function(peerList) {
             });
 
             connection.on("error", function(err) {
-               peerError(this.peer, err); 
+               peerError(this.peer, err);
             });
         }
     }
@@ -220,9 +220,9 @@ var connectToAllPeers = function(peerList) {
 var connect = function(name, callback) {
     var connectedToServer = false;
     var fullyConnected = false;
-    
+
     peerName = name.trim();
-    
+
     peer = new Peer({key: peerJSKey});
     console.log("Peer object created!");
     peer.on("open", function(id) {
@@ -230,14 +230,14 @@ var connect = function(name, callback) {
             connectedToServer = true;
             console.log("Peer open and ready!");
             peerID = id;
-            
+
             refreshInterval = setInterval(function() {
                 if (peer.disconnected) {
                     peer.reconnect();
                 } else {
                     peer.disconnect();
                     setTimeout(function() {
-                        peer.reconnect();  
+                        peer.reconnect();
                     }, 500);
                 }
             }, refreshTime);
@@ -245,7 +245,7 @@ var connect = function(name, callback) {
             peer.on("connection", function(conn) {
                 conn.on("open", function(){
                     var joiningUsername = conn.label.trim();
-                    if (joiningUsername.length > 4 && joiningUsername.length < 21) {
+                    if (joiningUsername.length > 1 && joiningUsername.length <= 30) {
                         if (containsSymbols(joiningUsername)) {
                             console.log("Username with symbols!")
                             conn.send({type:"registration-error", data:"Username contains forbidden symbols!"});
@@ -266,7 +266,7 @@ var connect = function(name, callback) {
                     } else {
                         console.log("Invalid username!");
                         conn.send({type:"registration-error", data:"Username must be 5 to 20 characters long!"});
-                    } 
+                    }
                 });
             });
 
@@ -281,7 +281,7 @@ var connect = function(name, callback) {
                     }
                 }
                 peerList[peerName] = peerID;
-                sendData(from, "peer-list-response", peerList) 
+                sendData(from, "peer-list-response", peerList)
             });
 
             // Connect to ambassador if there is one
@@ -300,7 +300,7 @@ var connect = function(name, callback) {
                             clearInterval(refreshInterval);
                             clearTimeout(timeoutTimeout);
                             fatalError(data);
-                        } 
+                        }
                     });
 
                     onMessageType("peer-list-response", function(from, data) {
@@ -335,11 +335,11 @@ var connect = function(name, callback) {
             // Connection refreshed!
         }
     });
-    
+
     peer.on("disconnected", function() {
 
     });
-    
+
     peer.on("error", function(err) {
         if (err.type == "peer-unavailable") {
             clearTimeout(timeoutTimeout);
@@ -350,7 +350,7 @@ var connect = function(name, callback) {
             peerError(peerID, err);
         }
     });
-    
+
     timeoutTimeout = setTimeout(function() {
         if (!connectedToServer) {
             peer.destroy();
