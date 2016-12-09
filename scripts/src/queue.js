@@ -82,7 +82,8 @@ Queue.prototype.getMetadata = function(type, code, callback) {
             events: {
                 "onReady": function(callback) {
                     return function(event) {
-                        var videoTitle = event.target.A.videoData.title;
+                        var videoData = event.target.getVideoData();
+                        var videoTitle = videoData.title;
                         if (videoTitle.length > 0) {
                             event.target.playVideo();
                         } else {
@@ -95,7 +96,8 @@ Queue.prototype.getMetadata = function(type, code, callback) {
                     return function(event) {
                         if (event.data == 1) {
                             event.target.setVolume(0);
-                            var videoTitle = event.target.A.videoData.title;
+                            var videoData = event.target.getVideoData();
+                            var videoTitle = videoData.title;
                             var duration = event.target.getDuration();
                             testPlayer.destroy();
                             testPlayer = null;
