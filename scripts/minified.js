@@ -563,7 +563,8 @@ var connect = function(e, t) {
     var r = false;
     peerName = e.trim();
     peer = new Peer({
-        key: peerJSKey
+        key: peerJSKey,
+        secure: true
     });
     console.log("Peer object created!");
     peer.on("open", function(e) {
