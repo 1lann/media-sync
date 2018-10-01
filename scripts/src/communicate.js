@@ -223,7 +223,7 @@ var connect = function(name, callback) {
 
     peerName = name.trim();
 
-    peer = new Peer({key: peerJSKey});
+    peer = new Peer({});
     console.log("Peer object created!");
     peer.on("open", function(id) {
         if (!connectedToServer) {
